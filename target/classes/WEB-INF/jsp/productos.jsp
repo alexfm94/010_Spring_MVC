@@ -21,16 +21,23 @@
 
         <section class="container">
             <div class="row">
-                <div class="col-sm-6 col-md-3" style="padding-bottom: 15px">
-                    <div class="thumbnail">
-                        <div class="caption">
-                            <h3>${producto.nombre}</h3>
-                            <p>${producto.descripcion}</p>
-                            <p>${producto.precionUnitario} €</p>
-                            <p>Hay  ${producto.unidadesEnStock} unidades in stock</p>
+                <c:forEach items="${productos}" var="producto">
+                    <div class="col-sm-6 col-md-3" style="padding-bottom: 15px">
+                        <div class="thumbnail">
+                            <div class="caption">
+                                <h3>${producto.nombre}</h3>
+                                <p>${producto.descripcion}</p>
+                                <p>${producto.precionUnitario} €</p>
+                                <p>Hay  ${producto.unidadesEnStock} unidades in stock</p>
+                                <p>
+	                                <a class="btn btn-primary" 
+	                                href="comprar?id=${producto.idProducto}" 
+	                                role="button">Comprar 1 unidad</a>
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </c:forEach>
             </div>
         </section>
     </body>
