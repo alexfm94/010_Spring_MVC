@@ -1,10 +1,12 @@
 package com.curso.controller;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -20,18 +22,28 @@ public class ProductoController {
 	@Autowired
     private ComprasService comprasService;
 	
+	//  /producto?id=P1234
 	@RequestMapping("/producto")
-	public String producto(Model model) {
-		Producto iphone = new Producto("P1234","iPhone 5s",
-                new  BigDecimal(500));
-        iphone.setDescripcion("Apple iPhone 5s smartphone with 4.00-inch 640x1136 display and 8-megapixel rear camera");
-        iphone.setCategoria("Smart Phone");
-        iphone.setFabricante("Apple");
-        iphone.setUnidadesEnPedido(1000);
-        
-        model.addAttribute("producto", iphone);
+	public String producto(@RequestParam("id") String productId, Model model) {
+		
+		Producto p = productoService.getProductoPorId(productId);
+		
+        model.addAttribute("producto", p);
         
 		return "producto"; //WEB-INF/jsp/productos.jsp
+	}
+	
+	//lista de categorias por categoria
+	
+	//  /productos/{categoria}
+	//  /productos/Smart+Phone
+	@RequestMapping("/productos/{categoria}")
+	public String productosPorCategoria(@PathVariable("categoria") String categoriaProducto,Model model) {
+		
+		Collection<Producto> lista = productoService.getProductosPorCategoria(categoriaProducto);
+		
+		model.addAttribute("productos", lista);
+		return "productos";
 	}
     
 	@RequestMapping("/productos")

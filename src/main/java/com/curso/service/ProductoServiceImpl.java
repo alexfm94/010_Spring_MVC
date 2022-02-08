@@ -24,4 +24,17 @@ public class ProductoServiceImpl implements ProductoService {
     public List<Producto> getTodosProductos() {
        return productoRepositorio.getAllProductos();
     }
+    
+    @Override
+    public List<Producto> getProductosPorCategoria(String categoria) {
+      return productoRepositorio.getProductosPoCategoria(categoria);
+    }
+
+    
+
+    @Override
+    public Producto getProductoPorId(String idProducto) {
+      Producto producto =productoRepositorio.getProductoPorId(idProducto);
+      return producto;
+    }
 }
