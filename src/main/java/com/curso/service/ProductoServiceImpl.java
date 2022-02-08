@@ -30,11 +30,15 @@ public class ProductoServiceImpl implements ProductoService {
       return productoRepositorio.getProductosPoCategoria(categoria);
     }
 
-    
-
     @Override
     public Producto getProductoPorId(String idProducto) {
       Producto producto =productoRepositorio.getProductoPorId(idProducto);
       return producto;
     }
+    
+    @Override
+    public void crearProducto(Producto producto) {
+       productoRepositorio.add(producto);
+    }
+    
 }

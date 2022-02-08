@@ -1,5 +1,5 @@
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %> 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -7,7 +7,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <link rel="stylesheet"
               href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-        <title>Products</title>
+        <title>Productos</title>
     </head>
     <body>
         <section>
@@ -27,7 +27,7 @@
                             <div class="caption">
                                 <h3>${producto.nombre}</h3>
                                 <p>${producto.descripcion}</p>
-                                <p>${producto.precionUnitario} €</p>
+                                <p>${producto.precioUnitario} €</p>
                                 <p>Hay  ${producto.unidadesEnStock} unidades in stock</p>
                                 <p>
 	                                <a class="btn btn-primary" 
@@ -38,6 +38,14 @@
                         </div>
                     </div>
                 </c:forEach>
+            </div>
+            <div class="row">
+            	<a class="btn btn-primary" 
+	            href="productos/nuevo" 
+	            role="button">NUEVO</a>
+	            <a class="btn btn-primary" 
+	            href="<spring:url value="/productos/nuevo"/>" 
+	            role="button">NUEVO</a>
             </div>
         </section>
     </body>

@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %> 
 
 <html>
 <head>
@@ -15,5 +16,10 @@
 			</div>
 		</div>
 	</section>
+	<p>
+		<a class="btn btn-primary" 
+		href="<spring:url value="/productos"/>" 
+		role="button">PRODUCTOS</a>
+    </p>
 </body>
 </html>

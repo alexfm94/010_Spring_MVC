@@ -26,7 +26,7 @@
                         <div class="caption">
                             <h3>${producto.nombre}</h3>
                             <p>${producto.descripcion}</p>
-                            <p>${producto.precionUnitario} €</p>
+                            <p>${producto.precioUnitario} €</p>
                             <p>Hay  ${producto.unidadesEnStock} unidades in stock</p>
                         </div>
                     </div>

@@ -17,7 +17,7 @@
             <div class="jumbotron"> 
                 <div class="container"> 
                     <h1>Productos</h1> 
-                    <p>Alta Nuevo Producto</p> 
+                    <p><spring:message code="productos.titulo" /></p> 
                 </div> 
             </div> 
         </section> 
@@ -29,7 +29,7 @@
                     <div class="form-group"> 
                         <label class="control-label col-lg-2 col-lg-2" 
                             for="idProducto">
-                            <spring:message code="producto.idProducto" />
+                         	<spring:message code="producto.idProducto" />
                         </label> 
                         <div class="col-lg-10"> 
                             <form:input id="id" path="idProducto"                           type="text" class="form:input-large"/> 

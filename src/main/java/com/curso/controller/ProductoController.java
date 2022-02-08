@@ -1,12 +1,14 @@
 package com.curso.controller;
 
-import java.math.BigDecimal;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -45,6 +47,13 @@ public class ProductoController {
 		model.addAttribute("productos", lista);
 		return "productos";
 	}
+	
+	//  /productos/tablet/Apple
+	@GetMapping("Productos/{categoria}/{fabricante}")
+	public String getProductorPorCategoriaYColor(@PathVariable("categoria") String categoriaProducto, @PathVariable("fabricante") String fabricante, Model model) {
+		//falta llamar a la capa de negocio y pasar model
+		return "productos";
+	}
     
 	@RequestMapping("/productos")
     public String productos(Model model) {
@@ -70,5 +79,28 @@ public class ProductoController {
 	public ProductoController() {
 		System.out.println("... iniciando ProductoController");
 	}
+	
+	// CREAR EL FORULARIO - GET
+	
+	@GetMapping(value = "/productos/nuevo") 
+	public String getCrearNuevoProductoFormulario(Model model) { 
+		Producto nuevoProducto = new Producto(); 
+		nuevoProducto.setNombre("Nuevo");
+		model.addAttribute("nuevoProducto", nuevoProducto); 
+		return "crear-producto"; 
+	} 
+	
+	// PROCESAR LOS DATOS DEL FORMULARIO - POST
+	
+	@PostMapping(value = "/productos/nuevo") 
+    public String procesarCrearNuevoProductoFormulario(
+           @ModelAttribute("nuevoProducto")  Producto nuevoProducto/*, Model model*/) { 
+		//falta validar
+		productoService.crearProducto(nuevoProducto); 
+		//model.addAttribute("productos", 
+		//        productoService.getTodosProductos());
+		//return "productos";
+		return "redirect:/productos";  
+    } 
 	
 }
