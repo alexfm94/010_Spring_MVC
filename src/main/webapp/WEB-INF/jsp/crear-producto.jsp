@@ -22,6 +22,11 @@
             </div> 
         </section> 
         <section class="container"> 
+        	<c:if test="${not empty error}">
+	        	<div class="alert alert-danger" role="alert">
+					Error: <spring:message code="${error}" />
+				</div>
+			</c:if>
             <form:form  method="POST" modelAttribute="nuevoProducto"               class="form-horizontal"> 
                 <fieldset> 
                     <legend>Crear un nuevo producto</legend> 

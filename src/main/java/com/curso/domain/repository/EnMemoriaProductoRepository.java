@@ -51,10 +51,10 @@ public class EnMemoriaProductoRepository implements ProductoRepository {
             }
         }
 
-        if (productoProId == null) {
-            throw new IllegalArgumentException("No se ha encontrado un "
-                    + "productos con el id: " + idProducto);
-        }
+//        if (productoProId == null) {
+//            throw new IllegalArgumentException("No se ha encontrado un "
+//                    + "productos con el id: " + idProducto);
+//        }
 
         return productoProId;
     }

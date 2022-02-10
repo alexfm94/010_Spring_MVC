@@ -1,18 +1,22 @@
 package com.curso.controller;
 
 import java.util.Collection;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.curso.domain.Producto;
+import com.curso.excepciones.ProductosException;
 import com.curso.service.ComprasService;
 import com.curso.service.ProductoService;
 
@@ -57,6 +61,10 @@ public class ProductoController {
     
 	@RequestMapping("/productos")
     public String productos(Model model) {
+		
+		//Para probar producto-exception.jsp
+//		String s =null;
+//		s.toCharArray();
 
 		model.addAttribute("productos", 
 				productoService.getTodosProductos());
@@ -94,13 +102,44 @@ public class ProductoController {
 	
 	@PostMapping(value = "/productos/nuevo") 
     public String procesarCrearNuevoProductoFormulario(
-           @ModelAttribute("nuevoProducto")  Producto nuevoProducto/*, Model model*/) { 
+           @ModelAttribute("nuevoProducto")  Producto nuevoProducto, Model model) { 
 		//falta validar
-		productoService.crearProducto(nuevoProducto); 
+		try {
+			productoService.crearProducto(nuevoProducto);
+			return "redirect:/productos";  
+		} catch (ProductosException e) {
+			model.addAttribute("nuevoProducto", nuevoProducto); 
+			model.addAttribute("error",e.getClaveMensaje());
+			return "crear-producto";
+		} 
 		//model.addAttribute("productos", 
 		//        productoService.getTodosProductos());
 		//return "productos";
-		return "redirect:/productos";  
-    } 
+		//return "redirect:/productos";  
+    }
+	
+	@ExceptionHandler(Exception.class)
+    public ModelAndView handleException( Exception exception) {
+		
+         ModelAndView mav = new ModelAndView();
+         
+        if(exception instanceof ProductosException){
+        	
+            mav.addObject("arg0","Error Producto");
+            mav.addObject("claveMensage",((ProductosException)exception).getClaveMensaje());
+            
+        }else{
+        	
+             mav.addObject("arg0",exception.getMessage());
+             mav.addObject("claveMensage","error.inexperado");
+             Logger.getAnonymousLogger().severe(exception.getMessage());
+             
+        }
+        
+        mav.setViewName("producto-exception");
+        
+        return mav;
+
+    }
 	
 }
