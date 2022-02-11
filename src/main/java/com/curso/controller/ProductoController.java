@@ -3,9 +3,12 @@ package com.curso.controller;
 import java.util.Collection;
 import java.util.logging.Logger;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -102,16 +105,21 @@ public class ProductoController {
 	
 	@PostMapping(value = "/productos/nuevo") 
     public String procesarCrearNuevoProductoFormulario(
-           @ModelAttribute("nuevoProducto")  Producto nuevoProducto, Model model) { 
+           @ModelAttribute("nuevoProducto") @Valid Producto nuevoProducto, 
+           BindingResult bindingResult) throws ProductosException { 
 		//falta validar
-		try {
+		System.out.println(bindingResult.hasErrors());
+		if(bindingResult.hasErrors()) {
+			return "crear-producto";
+		}
+//		try {
 			productoService.crearProducto(nuevoProducto);
 			return "redirect:/productos";  
-		} catch (ProductosException e) {
-			model.addAttribute("nuevoProducto", nuevoProducto); 
-			model.addAttribute("error",e.getClaveMensaje());
-			return "crear-producto";
-		} 
+//		} catch (ProductosException e) {
+//			model.addAttribute("nuevoProducto", nuevoProducto); 
+//			model.addAttribute("error",e.getClaveMensaje());
+//			return "crear-producto";
+//		} 
 		//model.addAttribute("productos", 
 		//        productoService.getTodosProductos());
 		//return "productos";
