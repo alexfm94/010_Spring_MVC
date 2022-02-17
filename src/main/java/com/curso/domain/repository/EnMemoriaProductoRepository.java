@@ -5,9 +5,12 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@Qualifier("EnMemoriaProductoRepository")
 public class EnMemoriaProductoRepository implements ProductoRepository {
 
     private List<Producto> listaDeProductos = new ArrayList<Producto>();
